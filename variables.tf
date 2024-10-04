@@ -64,12 +64,6 @@ variable "velero_bucket" {
   default     = "dev-backup"
 }
 
-variable "velero_image" {
-  description = "The image for Velero AWS"
-  type        = string
-  default     = "velero/velero-plugin-for-aws:v1.10.0"
-}
-
 variable "s3url" {
   description = "s3Url FQDN name"
   type        = string
