@@ -5,6 +5,84 @@ components:
   schemas:
     variables:
       type: object
+      required:
+      - aws_access_key_id
+      - aws_secret_access_key
+      properties:
+        namespace_name:
+          title: Namespace Name
+          type: string
+          description: The name of the Kubernetes namespace.
+          default: velero
+          x-walrus-ui:
+            group: Basic
+            order: 2
+        chart_version:
+          title: Chart Version
+          type: string
+          description: The version of the Velero Helm release chart.
+          default: 7.2.1
+          x-walrus-ui:
+            group: Basic
+            order: 3
+        velero_schedule:
+          title: Velero Schedule
+          type: string
+          description: The cron schedule for Velero backups
+          default: '@every 24h'
+          x-walrus-ui:
+            group: Basic
+            order: 4
+        velero_provider:
+          title: Velero Provider
+          type: string
+          description: Velero provider
+          default: velero.io/aws
+          x-walrus-ui:
+            group: Basic
+            order: 5
+        velero_bucket:
+          title: Velero Bucket
+          type: string
+          description: Bucket name
+          default: dev-backup
+          x-walrus-ui:
+            group: Basic
+            order: 6
+        velero_image:
+          title: Velero Image
+          type: string
+          description: The image for Velero AWS
+          default: velero/velero-plugin-for-aws:v1.10.0
+          x-walrus-ui:
+            group: Basic
+            order: 7
+        s3url:
+          title: S3url
+          type: string
+          description: s3Url FQDN name
+          default: minio.domainname.com
+          x-walrus-ui:
+            group: Basic
+            order: 8
+        aws_access_key_id:
+          title: Aws Access Key Id
+          type: string
+          description: AWS Access Key ID
+          format: password
+          writeOnly: true
+          x-walrus-ui:
+            group: Basic
+            order: 9
+        aws_secret_access_key:
+          title: Aws Secret Access Key
+          type: string
+          description: AWS Secret Access Key
+          format: password
+          writeOnly: true
+          x-walrus-ui:
+            group: Basic
+            order: 10
       x-walrus-ui:
         groupOrder:
         - Basic
