@@ -36,9 +36,9 @@ resource "helm_release" "velero" {
   values = [
     templatefile("${path.module}/values.yaml.tpl", {
       velero_image    = var.velero_image,
-      provider_bucket = var.velero_bucket,
+      velero_bucket   = var.velero_bucket,
       velero_provider = var.velero_provider,
-      issuer_name     = var.s3url
+      s3url           = var.s3url
     })
   ]
 }
