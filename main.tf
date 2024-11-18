@@ -46,7 +46,7 @@ resource "helm_release" "velero" {
 
 resource "kubectl_manifest" "velero_daily_schedule" {
   depends_on = [helm_release.velero]
-  
+
   yaml_body = <<EOF
 apiVersion: velero.io/v1
 kind: Schedule
