@@ -1,13 +1,10 @@
 openapi: 3.0.3
 info:
-  title: OpenAPI schema for template .
+  title: OpenAPI schema for Velero template .
 components:
   schemas:
     variables:
       type: object
-      required:
-      - aws_access_key_id
-      - aws_secret_access_key
       properties:
         namespace_name:
           title: Namespace Name
@@ -33,6 +30,14 @@ components:
           x-walrus-ui:
             group: Basic
             order: 4
+        velero_image:
+          title: Velero Image
+          type: string
+          description: The image for Velero provider
+          default: velero/velero-plugin-for-aws:v1.10.0
+          x-walrus-ui:
+            group: Basic
+            order: 5
         velero_provider:
           title: Velero Provider
           type: string
@@ -40,20 +45,12 @@ components:
           default: velero.io/aws
           x-walrus-ui:
             group: Basic
-            order: 5
+            order: 6
         velero_bucket:
           title: Velero Bucket
           type: string
           description: Bucket name
           default: dev-backup
-          x-walrus-ui:
-            group: Basic
-            order: 6
-        velero_image:
-          title: Velero Image
-          type: string
-          description: The image for Velero AWS
-          default: velero/velero-plugin-for-aws:v1.10.0
           x-walrus-ui:
             group: Basic
             order: 7
@@ -69,6 +66,7 @@ components:
           title: Aws Access Key Id
           type: string
           description: AWS Access Key ID
+          default: ""
           format: password
           writeOnly: true
           x-walrus-ui:
@@ -78,6 +76,7 @@ components:
           title: Aws Secret Access Key
           type: string
           description: AWS Secret Access Key
+          default: ""
           format: password
           writeOnly: true
           x-walrus-ui:
