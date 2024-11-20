@@ -26,8 +26,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Create empty kubeconfig
-        run: mkdir -p ~/.kube && echo '{}' > ~/.kube/config
+      - name: Kubernetes KinD Cluster
+        uses: container-tools/kind-action@v1
+        with:
+          cluster-name: test-cluster
+
+      - name: Verify kind cluster
+        run: kubectl get nodes
 
       - name: Install Terraform
         uses: hashicorp/setup-terraform@v3
@@ -46,4 +51,4 @@ jobs:
       - name: Run Terratest
         run: make terratest TERRAFORM_ENGINE=${{matrix.engine}}
         env:
-          KUBECONFIG: ~/.kube/config
+          KUBECONFIG: $HOME/.kube/config
