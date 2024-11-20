@@ -25,8 +25,6 @@ EOF
   type = "Opaque"
 }
 
-
-
 resource "helm_release" "velero" {
   name       = "velero"
   repository = "https://vmware-tanzu.github.io/helm-charts/"
