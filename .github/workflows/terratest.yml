@@ -36,6 +36,12 @@ jobs:
         env:
           KUBECONFIG: ${{ steps.kind.outputs.kubeconfig-path }}
 
+      - name: Ensure kubeconfig default location
+        run: mkdir -p ~/.kube && cp ${{ steps.kind.outputs.kubeconfig-path }} ~/.kube/config && chmod 600 ~/.kube/config
+
+      - name: Set KUBERNETES_MASTER
+        run: export KUBERNETES_MASTER=$(kubectl config view --minify -o jsonpath='{.clusters[0].cluster.server}') && echo "KUBERNETES_MASTER=$KUBERNETES_MASTER" >> $GITHUB_ENV
+
       - name: Install Terraform
         uses: hashicorp/setup-terraform@v3
         if: ${{ matrix.engine == 'terraform' }}
@@ -50,7 +56,13 @@ jobs:
           tofu_version: ${{ matrix.version }}
           tofu_wrapper: false
 
+      - name: Debug Kubernetes configuration
+        run: echo "KUBECONFIG=${KUBECONFIG}" && cat ~/.kube/config && kubectl config view
+        env:
+          KUBECONFIG: ${{ steps.kind.outputs.kubeconfig-path }}
+
       - name: Run Terratest
         run: make terratest TERRAFORM_ENGINE=${{matrix.engine}}
         env:
           KUBECONFIG: ${{ steps.kind.outputs.kubeconfig-path }}
+          KUBERNETES_MASTER: ${{ env.KUBERNETES_MASTER }}
