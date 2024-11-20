@@ -26,8 +26,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Mock Kubernetes Config
-        run: echo '{}' > ~/.kube/config
+      - name: Create empty kubeconfig
+        run: mkdir -p ~/.kube && echo '{}' > ~/.kube/config
 
       - name: Install Terraform
         uses: hashicorp/setup-terraform@v3
@@ -45,3 +45,5 @@ jobs:
 
       - name: Run Terratest
         run: make terratest TERRAFORM_ENGINE=${{matrix.engine}}
+        env:
+          KUBECONFIG: ~/.kube/config
