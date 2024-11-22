@@ -49,17 +49,19 @@ jobs:
       - name: Create Kind Cluster
         run: kind create cluster --name test-cluster
   
-      - name: Configure KUBECONFIG
+      - name: Configure Environment for Kubernetes
         run: |
-          export KUBECONFIG="$(kind get kubeconfig-path --name=test-cluster)"
+          export KUBECONFIG="$(kind get kubeconfig --name=test-cluster)"
           echo "KUBECONFIG=$KUBECONFIG" >> $GITHUB_ENV
-  
+          echo "KUBERNETES_MASTER=$(kubectl config view --minify -o jsonpath='{.clusters[0].cluster.server}')" >> $GITHUB_ENV
+
       - name: Verify Kubernetes Cluster
         run: kubectl cluster-info
   
       - name: Run Terratest
         env:
           KUBECONFIG: ${{ env.KUBECONFIG }}
+          KUBERNETES_MASTER: ${{ env.KUBERNETES_MASTER }}
         run: make terratest TERRAFORM_ENGINE=${{matrix.engine}}
   
       - name: Delete Kind Cluster
