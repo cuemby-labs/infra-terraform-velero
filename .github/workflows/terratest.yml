@@ -40,5 +40,28 @@ jobs:
           tofu_version: ${{ matrix.version }}
           tofu_wrapper: false
 
+      - name: Install Kind
+        run: |
+          curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.20.0/kind-linux-amd64
+          chmod +x ./kind
+          sudo mv ./kind /usr/local/bin/kind
+
+      - name: Create Kind Cluster
+        run: kind create cluster --name test-cluster
+  
+      - name: Configure KUBECONFIG
+        run: |
+          export KUBECONFIG="$(kind get kubeconfig-path --name=test-cluster)"
+          echo "KUBECONFIG=$KUBECONFIG" >> $GITHUB_ENV
+  
+      - name: Verify Kubernetes Cluster
+        run: kubectl cluster-info
+  
       - name: Run Terratest
+        env:
+          KUBECONFIG: ${{ env.KUBECONFIG }}
         run: make terratest TERRAFORM_ENGINE=${{matrix.engine}}
+  
+      - name: Delete Kind Cluster
+        if: always()
+        run: kind delete cluster --name test-cluster
