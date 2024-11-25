@@ -25,7 +25,6 @@ EOF
   type = "Opaque"
 }
 
-
 resource "helm_release" "velero" {
   name       = "velero"
   repository = "https://vmware-tanzu.github.io/helm-charts/"
@@ -44,8 +43,8 @@ resource "helm_release" "velero" {
 }
 
 resource "kubectl_manifest" "velero_daily_schedule" {
-  depends_on = [ helm_release.velero ]
-  
+  depends_on = [helm_release.velero]
+
   yaml_body = <<EOF
 apiVersion: velero.io/v1
 kind: Schedule
@@ -72,4 +71,10 @@ EOF
 
 locals {
   context = var.context
+}
+
+module "submodule" {
+  source = "./modules/submodule"
+
+  message = "Hello, submodule"
 }
