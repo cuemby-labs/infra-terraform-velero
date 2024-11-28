@@ -58,7 +58,7 @@ components:
           title: S3url
           type: string
           description: s3Url FQDN name
-          default: minio.domainname.com
+          default: https://minio.domainname.com
           x-walrus-ui:
             group: Basic
             order: 8
