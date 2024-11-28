@@ -67,7 +67,7 @@ variable "velero_bucket" {
 variable "s3url" {
   description = "s3Url FQDN name"
   type        = string
-  default     = "minio.domainname.com"
+  default     = "https://minio.domainname.com"
 }
 
 variable "aws_access_key_id" {

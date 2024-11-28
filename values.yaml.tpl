@@ -29,7 +29,7 @@ configuration:
     config:
       region: minio
       s3ForcePathStyle: "true"
-      s3Url: http://${s3url}:9000
+      s3Url: ${s3url}
   volumeSnapshotLocation:
     - name: default
       provider: ${velero_provider}
