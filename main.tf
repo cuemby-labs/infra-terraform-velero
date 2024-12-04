@@ -59,8 +59,6 @@ spec:
   schedule: "${var.velero_schedule}"
   template:
     ttl: ${var.velero_schedule_ttl}
-    includedNamespaces:
-      - '*'
     excludedNamespaces:
       - ${var.namespace_name}
     includeClusterResources: true
