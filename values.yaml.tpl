@@ -40,9 +40,9 @@ configuration:
         name: cloud-credentials
 deployNodeAgent: true
 resources:
-  requests:
-    cpu: 1000m
-    memory: 2000Mi
   limits:
-    cpu: 2000m
-    memory: 4000Mi
+    cpu: ${limits_cpu}
+    memory: ${limits_memory}
+  requests:
+    cpu: ${request_cpu}
+    memory: ${request_memory}

@@ -13,7 +13,7 @@ components:
           default: velero
           x-walrus-ui:
             group: Basic
-            order: 2
+            order: 1
         chart_version:
           title: Chart Version
           type: string
@@ -21,12 +21,20 @@ components:
           default: 7.2.1
           x-walrus-ui:
             group: Basic
-            order: 3
+            order: 2
         velero_schedule:
           title: Velero Schedule
           type: string
           description: The cron schedule for Velero backups
           default: '@every 24h'
+          x-walrus-ui:
+            group: Basic
+            order: 3
+        velero_schedule_ttl:
+          title: Velero Schedule Ttl
+          type: string
+          description: Velero backups TTL
+          default: 168h0m0s
           x-walrus-ui:
             group: Basic
             order: 4
@@ -82,6 +90,27 @@ components:
           x-walrus-ui:
             group: Basic
             order: 10
+        resources:
+          title: Resources
+          type: object
+          description: Resource limits and requests for Velero Helm release.
+          default:
+            limits:
+              cpu: 2000m
+              memory: 4000Mi
+            requests:
+              cpu: 1000m
+              memory: 2000Mi
+          additionalProperties:
+            additionalProperties:
+              type: string
+            type: object
+            x-walrus-ui:
+              colSpan: 12
+          x-walrus-ui:
+            colSpan: 12
+            group: Basic
+            order: 11
       x-walrus-ui:
         groupOrder:
         - Basic

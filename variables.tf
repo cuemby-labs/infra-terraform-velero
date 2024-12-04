@@ -1,30 +1,4 @@
 #
-# Contextual Fields
-#
-
-variable "context" {
-  description = <<-EOF
-Receive contextual information. When Walrus deploys, Walrus will inject specific contextual information into this field.
-
-Examples:
-```
-context:
-  project:
-    name: string
-    id: string
-  environment:
-    name: string
-    id: string
-  resource:
-    name: string
-    id: string
-```
-EOF
-  type        = map(any)
-  default     = {}
-}
-
-#
 # Velero Variables
 #
 
@@ -44,6 +18,12 @@ variable "velero_schedule" {
   description = "The cron schedule for Velero backups"
   type        = string
   default     = "@every 24h"
+}
+
+variable "velero_schedule_ttl" {
+  description = "Velero backups TTL"
+  type        = string
+  default     = "168h0m0s"
 }
 
 variable "velero_image" {
@@ -82,4 +62,46 @@ variable "aws_secret_access_key" {
   type        = string
   sensitive   = true
   default     = ""
+}
+
+variable "resources" {
+  description = "Resource limits and requests for Velero Helm release."
+  type        = map(map(string))
+
+  default = {
+    limits = {
+      cpu    = "2000m"
+      memory = "4000Mi"
+    }
+    requests = {
+      cpu    = "1000m"
+      memory = "2000Mi"
+    }
+  }
+}
+
+#
+# Contextual Fields
+#
+
+variable "context" {
+  description = <<-EOF
+Receive contextual information. When Walrus deploys, Walrus will inject specific contextual information into this field.
+
+Examples:
+```
+context:
+  project:
+    name: string
+    id: string
+  environment:
+    name: string
+    id: string
+  resource:
+    name: string
+    id: string
+```
+EOF
+  type        = map(any)
+  default     = {}
 }
