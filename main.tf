@@ -37,7 +37,11 @@ resource "helm_release" "velero" {
       velero_image    = var.velero_image,
       velero_bucket   = var.velero_bucket,
       velero_provider = var.velero_provider,
-      s3url           = var.s3url
+      s3url           = var.s3url,
+      request_memory  = var.resources["requests"]["memory"],
+      limits_memory   = var.resources["limits"]["memory"],
+      request_cpu     = var.resources["requests"]["cpu"],
+      limits_cpu      = var.resources["limits"]["cpu"]
     })
   ]
 }
@@ -54,7 +58,7 @@ metadata:
 spec:
   schedule: "${var.velero_schedule}"
   template:
-    ttl: 336h0m0s
+    ttl: ${var.velero_schedule_ttl}
     includedNamespaces:
       - '*'
     includeClusterResources: true

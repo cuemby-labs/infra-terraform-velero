@@ -17,6 +17,17 @@ module "velero" {
   s3url                  = "minio.domainname.com"                  # s3Url FQDN name
   aws_access_key_id      = AWS Access Key ID"                      # AWS Access Key ID
   aws_secret_access_key  = "AWS Secret Access Key"                 # AWS Secret Access Key
+
+  resources = {
+    limits = {
+      cpu    = "2000m"
+      memory = "4000Mi"
+    }
+    requests = {
+      cpu    = "1000m"
+      memory = "2000Mi"
+    }
+  }
 }
 ```
 
@@ -71,6 +82,7 @@ No modules.
 | <a name="input_s3url"></a> [s3url](#input_s3url) | s3Url FQDN name. | `string` | `"minio.domainname.com"` | yes |
 | <a name="input_aws_access_key_id"></a> [aws_access_key_id](#input_aws_access_key_id) | AWS Access Key ID. | `string` | `""` | yes |
 | <a name="input_aws_secret_access_key"></a> [aws_secret_access_key](#input_aws_secret_access_key) | AWS Secret Access Key. | `string` | `""` | yes |
+| <a name="input_resources"></a> [resources](#input_resources) | Resource limits and requests for Cert-Manager pods. | `map(map(string))` | `"See example"` | no |
 
 ## Outputs
 
