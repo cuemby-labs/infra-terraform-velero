@@ -61,6 +61,8 @@ spec:
     ttl: ${var.velero_schedule_ttl}
     includedNamespaces:
       - '*'
+    excludedNamespaces:
+      - ${var.namespace_name}
     includeClusterResources: true
     defaultVolumesToFsBackup: true
     snapshotMoveData: true
